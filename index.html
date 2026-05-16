@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safari Fashion | Luxury High-Street Abu Dhabi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <style>
+        :root { --gold: #C5A059; --black: #000000; --white: #FFFFFF; --grey: #F5F5F5; --border: #E5E5E5; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--black); line-height: 1.6; overflow-x: hidden; }
+        
+        /* Navigation */
+        .utility-bar { background: var(--black); color: white; text-align: center; padding: 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; }
+        header { border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; background: white; width: 100%; }
+        .main-nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; max-width: 1600px; margin: 0 auto; }
+        
+        /* Logo Styling */
+        .logo-img { height: 45px; cursor: pointer; object-fit: contain; }
+        
+        .nav-links { display: flex; gap: 35px; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: black; font-size: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
+        .cart-icon { position: relative; cursor: pointer; font-size: 20px; }
+        #cart-count { position: absolute; top: -8px; right: -10px; background: var(--gold); color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; font-weight: 700; }
+
+        /* Page System */
+        .page { display: none; width: 100%; min-height: 80vh; }
+        .active-page { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- HOME PAGE --- */
+        .hero { display: flex; height: 85vh; background: #f0f0f0; }
+        .hero-text { width: 45%; display: flex; flex-direction: column; justify-content: center; padding: 0 8%; background: white; }
+        .hero-text h1 { font-family: 'Playfair Display', serif; font-size: clamp(40px, 5vw, 60px); line-height: 1.1; margin-bottom: 25px; }
+        .hero-img { flex: 1; background: url('image/background_wallpaper.jpg') center/cover no-repeat; }
+        .btn-black { background: black; color: white; padding: 18px 40px; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; display: inline-block; width: fit-content; border: none; cursor: pointer; transition: 0.3s; }
+        .btn-black:hover { background: var(--gold); }
+
+        .section-padding { padding: 80px 5%; max-width: 1600px; margin: 0 auto; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 32px; text-align: center; margin-bottom: 50px; }
+
+        /* Department Cards */
+        .dept-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .dept-card { height: 500px; position: relative; overflow: hidden; cursor: pointer; color: white; }
+        .dept-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .dept-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; transition: background 0.3s; }
+        .dept-card:hover img { transform: scale(1.05); }
+        .dept-card:hover .dept-overlay { background: rgba(0,0,0,0.4); }
+        .dept-overlay h3 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 5px; }
+        .dept-overlay p { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #ddd; }
+
+        .intro-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; background: #fafafa; padding: 80px 5%; }
+        .intro-content { padding: 40px; }
+        .intro-content h2 { font-family: 'Playfair Display', serif; font-size: 38px; margin-bottom: 20px; }
+        .shop-layout { display: grid; grid-template-columns: 240px 1fr; gap: 50px; padding: 60px 5%; max-width: 1600px; margin: 0 auto; }
+        .sidebar { position: sticky; top: 100px; height: fit-content; }
+        .sidebar h4 { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; border-bottom: 1px solid #000; padding-bottom: 15px; }
+        .filter-item { margin-bottom: 30px; }
+        .filter-item input, .filter-item select { width: 100%; padding: 12px; border: 1px solid #ddd; outline: none; font-family: inherit; font-size: 13px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 50px 25px; }
+        .p-card { cursor: pointer; text-align: center; }
+        .p-img-container { aspect-ratio: 3/4; background: #fcfcfc; position: relative; overflow: hidden; margin-bottom: 15px; }
+        .p-img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .p-card:hover .p-img-container img { transform: scale(1.03); }
+        .quick-add { position: absolute; bottom: 0; width: 100%; background: rgba(255,255,255,0.95); padding: 15px; font-size: 11px; font-weight: 700; text-transform: uppercase; transform: translateY(100%); transition: transform 0.3s ease; }
+        .p-card:hover .quick-add { transform: translateY(0); }
+        .p-info h4 { font-size: 14px; margin-bottom: 5px; font-weight: 400; color: #333; }
+        .p-price { font-weight: 700; color: var(--gold); }
+
+        /* --- BAG PAGE --- */
+        .cart-container { max-width: 900px; margin: 60px auto; padding: 0 20px; }
+        .cart-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 30px; }
+        .clear-btn { background: none; border: none; border-bottom: 1px solid red; color: red; font-size: 11px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .clear-btn:hover { opacity: 0.6; }
+
+        .cart-item { display: flex; align-items: center; gap: 25px; padding: 25px 0; border-bottom: 1px solid #eee; }
+        .cart-item img { width: 110px; height: 150px; object-fit: cover; }
+        .cart-details { flex: 1; }
+        .cart-details h3 { font-size: 16px; margin-bottom: 5px; font-weight: 400; }
+        .qty-controls { display: flex; align-items: center; gap: 15px; margin-top: 15px; }
+        .qty-btn { width: 30px; height: 30px; background: white; border: 1px solid #ddd; cursor: pointer; }
+        
+        .checkout-box { background: #fafafa; padding: 40px; margin-top: 40px; border: 1px solid #eee; }
+        .client-name, .client-phonenumber, .client-email { margin-top: 20px; }
+        .wa-btn { background: #111; color: white; width: 100%; padding: 20px; border: none; font-weight: 700; cursor: pointer; font-size: 14px; letter-spacing: 1px; margin-top: 20px; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s; }
+        .wa-btn:hover { background: #25D366; }
+        .whatsapp-btn { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; z-index: 1000; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.3s ease, box-shadow 0.3s ease; }  
+        .site-footer { background: #111; color: #fff; padding: 80px 5% 30px; margin-top: 60px; font-size: 13px; }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; max-width: 1600px; margin: 0 auto; border-bottom: 1px solid #333; padding-bottom: 50px; }
+        .footer-brand p { color: #aaa; margin-top: 15px; line-height: 1.8; max-width: 300px; }
+        .footer-links h4, .footer-newsletter h4 { font-family: 'Playfair Display', serif; font-size: 16px; margin-bottom: 20px; letter-spacing: 1px; color: var(--gold); }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: #aaa; text-decoration: none; transition: color 0.3s; cursor: pointer; }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-newsletter p { color: #aaa; margin-bottom: 15px; }
+        .newsletter-box { display: flex; border-bottom: 1px solid #555; padding-bottom: 5px; margin-bottom: 25px; }
+        .newsletter-box input { background: transparent; border: none; color: white; width: 100%; outline: none; font-family: inherit; font-size: 13px; }
+        .newsletter-box button { background: none; border: none; color: var(--gold); font-size: 18px; cursor: pointer; transition: 0.3s; }
+        .newsletter-box button:hover { transform: translateX(5px); }
+        .social-icons { display: flex; gap: 15px; }
+        .social-icons a { color: #fff; background: #222; width: 35px; height: 35px; display: flex; justify-content: center; align-items: center; border-radius: 50%; text-decoration: none; transition: 0.3s; }
+        .social-icons a:hover { background: var(--gold); color: #111; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; max-width: 1600px; margin: 0 auto; padding-top: 25px; color: #777; font-size: 11px; flex-wrap: wrap; gap: 10px; }
+
+        @media (max-width: 900px) {
+            .hero, .intro-section, .shop-layout, .dept-grid { grid-template-columns: 1fr; flex-direction: column; }
+            .hero-text { width: 100%; padding: 60px 5%; text-align: center; }
+            .hero-img { height: 400px; }
+            .btn-black { margin: 0 auto; }
+            .sidebar { position: static; margin-bottom: 20px; }
+            
+            /* Responsive Footer */
+            .footer-top { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand p { margin: 15px auto; }
+            .social-icons { justify-content: center; }
+            .footer-bottom { flex-direction: column; text-align: center; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="utility-bar">Discover the Spring / Summer '26 Edit | Abu Dhabi Flagship Store</div>
+
+<header>
+    <div class="main-nav">
+        <ul class="nav-links">
+            <img src="image/safary fashion logo.jpg" class="logo-img" onclick="showPage('home')" alt="Safari Fashion">
+            <li onclick="showPage('home')"><a>Home</a></li>
+            <li onclick="showPage('shop')"><a>Collections</a></li>
+        </ul>
+        
+        <div class="nav-links">
+            <div class="cart-icon" onclick="showPage('cart')">
+                <i class="fas fa-shopping-bag"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div id="home" class="page active-page">
+    <section class="hero">
+        <div class="hero-text">
+            <p style="font-size: 11px; letter-spacing: 3px; margin-bottom: 10px;">SPRING / SUMMER 2026</p>
+            <h1>Defining Modern Modesty.</h1>
+            <p style="color: #666; margin-bottom: 35px;">From the heart of Abu Dhabi to your wardrobe. High-quality fabrics tailored for every occasion.</p>
+            <button onclick="showPage('shop')" class="btn-black">Start Shopping</button>
+        </div>
+        <div class="hero-img"></div>
+    </section>
+
+    <section class="section-padding">
+        <h2 class="section-title">Shop by Department</h2>
+        <div class="dept-grid">
+            <div class="dept-card" onclick="filterByCat('women')">
+                <img src="image/women-intro.jpg">
+                <div class="dept-overlay"><h3>WOMEN</h3><p>Abayas & Evening Wear</p></div>
+            </div>
+            <div class="dept-card" onclick="filterByCat('men')">
+                <img src="https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?auto=format&fit=crop&w=600">
+                <div class="dept-overlay"><h3>MEN</h3><p>Polo Shirts & Formals</p></div>
+            </div>
+            <div class="dept-card" onclick="filterByCat('kids')">
+                <img src="https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=600">
+                <div class="dept-overlay"><h3>KIDS</h3><p>Suits & Summer Sets</p></div>
+            </div>
+        </div>
+    </section>
+
+   <section class="intro-section">
+        <div class="intro-img">
+            <img src="image/background.jpg" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="intro-content">
+            <p style="color:var(--gold); font-weight:700; font-size:12px; letter-spacing:2px; margin-bottom:10px;">OUR HERITAGE</p>
+            <h2>Safari Fashion: A Boutique Experience</h2>
+            <p style="color:#666; margin-bottom:25px;">Located beside Al Mariah Mall on Hamdan Street, Safari Fashion has spent years curating a 4.3-star reputation. We are a women-owned business dedicated to premium quality and the perfect fit.</p>
+            <p style="font-style: italic; border-left: 3px solid var(--gold); padding-left: 20px; font-size: 16px;">"We believe that elegance is not about being noticed, it's about being remembered."</p>
+        </div>
+    </section>
+
+    <section class="intro-section" style="background: #ffffff;">
+        <div class="intro-content">
+            <p style="color:var(--gold); font-weight:700; font-size:12px; letter-spacing:2px; margin-bottom:10px;">OUR CRAFTSMANSHIP</p>
+            <h2>Uncompromising Quality & Style</h2>
+            <p style="color:#666; margin-bottom:25px;">Every piece in our collection is thoughtfully selected to blend contemporary trends with timeless modesty. From the intricate stitching of our abayas to the breathable fabrics of our summer sets, we prioritize your comfort without ever sacrificing sophistication.</p>
+            <p style="font-style: italic; border-left: 3px solid var(--gold); padding-left: 20px; font-size: 16px;">"True style is an expression of your identity, crafted with care and worn with absolute confidence."</p>
+        </div>
+        <div class="intro-img">
+            <img src="image/aboutus.jpg" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <h2 class="section-title">Trending Now</h2>
+        <div class="product-grid" id="featured-grid"></div>
+    </section>
+</div>
+
+<div id="shop" class="page">
+    <div class="shop-layout">
+        <aside class="sidebar">
+            <div class="filter-item">
+                <h4>Search</h4>
+                <input type="text" id="searchBar" placeholder="Search styles..." onkeyup="runFilters()">
+            </div>
+            <div class="filter-item">
+                <h4>Category</h4>
+                <select id="catF" onchange="runFilters()">
+                    <option value="all">All Departments</option>
+                    <option value="women">Women</option>
+                    <option value="men">Men</option>
+                    <option value="kids">Kids</option>
+                </select>
+            </div>
+            
+            <div class="filter-item">
+                <h4>Season</h4>
+                <select id="seasonF" onchange="runFilters()">
+                    <option value="all">All Seasons</option>
+                    <option value="summer">Summer</option>
+                    <option value="winter">Winter</option>
+                </select>
+            </div>
+
+            <div class="filter-item">
+                <h4>Price</h4>
+                <select id="priceF" onchange="runFilters()">
+                    <option value="all">All Prices</option>
+                    <option value="under200">Under 200 AED</option>
+                    <option value="200to500">200 AED - 500 AED</option>
+                    <option value="over500">Over 500 AED</option>
+                </select>
+            </div>
+
+        </aside>
+        <main>
+            <div class="product-grid" id="full-shop-grid"></div>
+        </main>
+    </div>
+</div>
+
+<div id="cart" class="page">
+    <div class="cart-container">
+        <div class="cart-header">
+            <h1 style="font-family:'Playfair Display'; font-size:36px;">Your Bag</h1>
+            <button class="clear-btn" onclick="clearFullBag()">Clear All Cart</button>
+        </div>
+        
+        <div id="cart-items"></div>
+        
+        <div id="cart-empty" style="display:none; text-align:center; padding:80px 0;">
+            <p style="margin-bottom: 20px; color:#666;">Your bag is currently empty.</p>
+            <button class="btn-black" onclick="showPage('shop')">Continue Shopping</button>
+        </div>
+
+        <div class="checkout-box" id="checkout-ui">
+            <div style="display:flex; justify-content:space-between; font-size:24px; font-weight:700; border-bottom:1px solid #ddd; padding-bottom:20px;">
+                <span>Total</span><span id="cart-total" style="color:var(--gold);">0 AED</span>
+            </div>
+            <div class="client-name">
+                <label style="font-size:11px; font-weight:700; display:block; margin-bottom:10px; text-transform:uppercase;">Full Name *</label>
+                <input type="text" id="client-name" style="width:100%; padding:15px; border:1px solid #ddd; font-family:inherit;" placeholder="Enter your full name">
+            </div>
+            <div class="client-phonenumber">
+                <label style="font-size:11px; font-weight:700; display:block; margin-bottom:10px; text-transform:uppercase;">Phone Number *</label>
+                <input type="text" id="client-phonenumber" style="width:100%; padding:15px; border:1px solid #ddd; font-family:inherit;" placeholder="Enter your phone number">
+            </div>
+            <div class="client-email">
+                <label style="font-size:11px; font-weight:700; display:block; margin-bottom:10px; text-transform:uppercase;">Email Address</label>
+                <input type="email" id="client-email" style="width:100%; padding:15px; border:1px solid #ddd; font-family:inherit;" placeholder="Enter your email address">
+            </div>
+            <div style="margin-top:30px;">
+                <label style="font-size:11px; font-weight:700; display:block; margin-bottom:10px; text-transform:uppercase;">Delivery Address & Landmark *</label>
+                <textarea id="address" rows="4" style="width:100%; padding:15px; border:1px solid #ddd; font-family:inherit; resize:vertical;" placeholder="Example: Ahmed Khan, beside Al Mariah Mall, Hamdan St..."></textarea>
+            </div>
+
+            <div style="margin-top:15px; margin-bottom:20px;">
+                <button onclick="getLocation()" style="background:#eee; border:1px solid #ddd; padding:12px; font-size:12px; cursor:pointer; font-weight:700; width:100%; display:flex; justify-content:center; align-items:center; gap:10px; transition:0.3s;">
+                    <i class="fas fa-map-marker-alt"></i> ADD MY GPS LOCATION
+                </button>
+                <p id="location-status" style="font-size:12px; font-weight:600; margin-top:10px; display:none; text-align:center;"></p>
+            </div>
+
+            <button class="wa-btn" onclick="submitToWA()">
+                <i class="fab fa-whatsapp" style="font-size:18px;"></i> CHECKOUT VIA WHATSAPP
+            </button>
+        </div>
+    </div>
+</div>
+<a href="https://wa.me/971508252305" class="whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<footer class="site-footer">
+    <div class="footer-top">
+        <div class="footer-brand">
+            <h3 style="font-family:'Playfair Display', serif; font-size: 24px; color: var(--gold);">Safari Fashion</h3>
+            <p>Defining modern modesty. High-quality fabrics tailored for every occasion, straight from the heart of Abu Dhabi.</p>
+        </div>
+        
+        <div class="footer-links">
+            <h4>Shop</h4>
+            <ul>
+                <li><a onclick="filterByCat('women')">Women's Collection</a></li>
+                <li><a onclick="filterByCat('men')">Men's Collection</a></li>
+                <li><a onclick="filterByCat('kids')">Kids' Collection</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-links">
+            <h4>Customer Care</h4>
+            <ul>
+                <li><a onclick="window.scrollTo(0,0)">Contact Us</a></li>
+                <li><a onclick="window.scrollTo(0,0)">Shipping & Returns</a></li>
+                <li><a onclick="window.scrollTo(0,0)">Size Guide</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-newsletter">
+            <h4>Join Our List</h4>
+            <p>Subscribe for updates on new arrivals and exclusive boutique offers.</p>
+            <div class="newsletter-box">
+                <input type="email" placeholder="Email Address">
+                <button>→</button>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/safari_fashion1994/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/Safarifashions/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://wa.me/96176134251" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <div>
+            <p>&copy; 2026 Safari Fashion Abu Dhabi. All rights reserved.</p>
+            <p style="margin-top: 5px; font-size: 10px; letter-spacing: 1px;">DEVELOPED BY <span style="color: var(--gold); font-weight: 600;">ABDULLAH TARHINI</span></p>
+        </div>
+        <p>Hamdan Bin Mohammed St, Al Danah | Open Daily 10:00 AM - 12:00 AM</p>
+    </div>
+</footer>
+
+<script>
+    // DATA - Original default stock
+    const defaultProducts = [
+        { id: 1, name: "Midnight Silk Abaya", price: 550, cat: "women", featured: true, img: "image/t-shirt temp.jpg", season: "summer", stock: 15 },
+        { id: 2, name: "Luxury Men's Polo", price: 210, cat: "men", featured: true, img: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=500", season: "summer", stock: 20 },
+        { id: 3, name: "Junior Tailored Suit", price: 420, cat: "kids", featured: true, img: "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=500", season: "all", stock: 8 },
+        { id: 4, name: "Cashmere Winter Wrap", price: 890, cat: "women", featured: true, img: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=500", season: "winter", stock: 5 },
+        { id: 5, name: "Basic White T-Shirt", price: 95, cat: "men", featured: false, img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=500", season: "summer", stock: 50 },
+        { id: 6, name: "Kids Winter Blazer", price: 340, cat: "kids", featured: false, img: "image/t-shirt temp.jpg", season: "winter", stock: 12 }
+    ];
+
+    // Load inventory from local storage so changes are permanent for testing
+    let products = JSON.parse(localStorage.getItem('safari_inventory')) || defaultProducts;
+    let cart = JSON.parse(localStorage.getItem('safari_luxury_cart')) || [];
+    let userLocation = ""; 
+
+    // NAVIGATION
+    function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(id).classList.add('active-page');
+        if(id === 'cart') renderCart();
+        window.scrollTo(0,0);
+    }
+
+    // RENDER HELPERS - Handles Out of Stock visuals
+    function createCard(p) {
+        const isOutOfStock = p.stock <= 0;
+        const stockLabel = isOutOfStock ? `Out of Stock` : `Shop Now +`;
+        const clickAction = isOutOfStock ? `style="opacity: 0.5; cursor: not-allowed;"` : `onclick="addToCart(${p.id})"`;
+        const imgFilter = isOutOfStock ? `filter: grayscale(100%);` : ``;
+        const labelColor = isOutOfStock ? `color: red;` : ``;
+
+        return `
+            <div class="p-card" ${clickAction}>
+                <div class="p-img-container">
+                    <img src="${p.img}" style="${imgFilter}">
+                    <div class="quick-add" style="${labelColor}">${stockLabel}</div>
+                </div>
+                <div class="p-info">
+                    <p style="font-size:10px; color:#888; text-transform:uppercase; margin-bottom:3px;">${p.cat} • ${p.stock} Left</p>
+                    <h4>${p.name}</h4>
+                    <p class="p-price">${p.price} AED</p>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderHome() {
+        const featured = products.filter(p => p.featured);
+        document.getElementById('featured-grid').innerHTML = featured.map(p => createCard(p)).join('');
+    }
+
+    // Includes Price Filter Logic
+    function runFilters() {
+        const q = document.getElementById('searchBar').value.toLowerCase();
+        const cat = document.getElementById('catF').value;
+        const season = document.getElementById('seasonF').value; 
+        const price = document.getElementById('priceF').value; 
+
+        const filtered = products.filter(p => {
+            const matchSearch = p.name.toLowerCase().includes(q);
+            const matchCat = (cat === 'all' || p.cat === cat);
+            const matchSeason = (season === 'all' || p.season === season || p.season === 'all'); 
+            
+            let matchPrice = true;
+            if(price === 'under200') matchPrice = p.price < 200;
+            if(price === '200to500') matchPrice = p.price >= 200 && p.price <= 500;
+            if(price === 'over500') matchPrice = p.price > 500;
+
+            return matchSearch && matchCat && matchSeason && matchPrice;
+        });
+        document.getElementById('full-shop-grid').innerHTML = filtered.map(p => createCard(p)).join('');
+    }
+
+    function filterByCat(c) {
+        showPage('shop');
+        document.getElementById('catF').value = c;
+        runFilters();
+    }
+
+    // CART LOGIC
+    function addToCart(id) {
+        const p = products.find(i => i.id === id);
+        const existing = cart.find(i => i.id === id);
+        
+        if(existing) {
+            if (existing.qty >= p.stock) {
+                alert(`Sorry, you have reached the maximum stock available for ${p.name}. Only ${p.stock} available.`);
+                return; 
+            }
+            existing.qty++;
+        } else {
+            if (p.stock > 0) {
+                cart.push({...p, qty: 1});
+            } else {
+                alert(`Sorry, ${p.name} is currently out of stock.`);
+                return;
+            }
+        }
+        save();
+    }
+    function renderCart() {
+        const container = document.getElementById('cart-items');
+        const ui = document.getElementById('checkout-ui');
+        const empty = document.getElementById('cart-empty');
+        const clearBtn = document.querySelector('.clear-btn');
+
+        if(cart.length === 0) {
+            container.innerHTML = ""; ui.style.display="none"; empty.style.display="block"; clearBtn.style.display="none"; return;
+        }
+
+        empty.style.display="none"; ui.style.display="block"; clearBtn.style.display="block";
+        let total = 0;
+        container.innerHTML = cart.map(item => {
+            total += (item.price * item.qty);
+            return `
+                <div class="cart-item">
+                    <img src="${item.img}">
+                    <div class="cart-details">
+                        <h3>${item.name}</h3>
+                        <p style="font-weight:700; color:#555;">${item.price} AED</p>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="updateQty(${item.id}, -1)">-</button>
+                            <span style="font-size:14px; width:20px; text-align:center;">${item.qty}</span>
+                            <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+                        </div>
+                        <div style="margin-top:10px; font-size:11px; color:#888;">In Stock: ${products.find(p => p.id === item.id).stock}</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <p style="font-weight:700; font-size:18px; margin-bottom:15px;">${item.price * item.qty} AED</p>
+                        <i class="fas fa-times" style="color:#aaa; cursor:pointer; font-size:18px;" onclick="removeItem(${item.id})"></i>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        document.getElementById('cart-total').innerText = total + " AED";
+    }
+
+    function updateQty(id, d) {
+        const i = cart.find(c => c.id === id);
+        const p = products.find(prod => prod.id === id); 
+        
+        let newQty = i.qty + d;
+
+        if (newQty > p.stock) {
+            alert(`Sorry, you cannot add more. Only ${p.stock} items available in stock.`);
+            return;
+        }
+
+        if(newQty < 1) newQty = 1;
+        
+        i.qty = newQty;
+        save(); renderCart();
+    }
+
+    function removeItem(id) {
+        cart = cart.filter(c => c.id !== id);
+        save(); renderCart();
+    }
+
+    function clearFullBag() {
+        if(confirm("Are you sure you want to empty your bag?")) {
+            cart = [];
+            save();
+            renderCart();
+        }
+    }
+
+    function save() {
+        localStorage.setItem('safari_luxury_cart', JSON.stringify(cart));
+        document.getElementById('cart-count').innerText = cart.reduce((a, b) => a + b.qty, 0);
+    }
+
+    function getLocation() {
+        const statusText = document.getElementById('location-status');
+        if (navigator.geolocation) {
+            statusText.style.display = "block";
+            statusText.style.color = "#888";
+            statusText.innerText = "Fetching location... please allow prompt.";
+            
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                userLocation = `https://www.google.com/maps?q=${lat},${lon}`;
+                
+                statusText.style.color = "green";
+                statusText.innerText = "✓ Location captured successfully!";
+            }, function(error) {
+                statusText.style.color = "red";
+                statusText.innerText = "❌ Please allow location access in your browser.";
+            });
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    // Checkout and Deduct Inventory
+    function submitToWA() {
+        const addr = document.getElementById('address').value;
+        const fullName = document.getElementById('client-name').value;
+        const phoneNumber = document.getElementById('client-phonenumber').value;
+        const email = document.getElementById('client-email').value;
+        if(cart.length === 0) return alert("Your bag is empty. Please add items before checking out.");
+        if(!fullName) return alert("Please enter your full name.");
+        if(!phoneNumber) return alert("Please enter your phone number.");
+        if(!addr) return alert("Please enter delivery address & landmark.");
+        
+        let text = "🛍️ *ORDER FROM SAFARI FASHION WEB*\n\n";
+        cart.forEach(i => text += `▪️ ${i.name} (x${i.qty}) - ${i.price * i.qty} AED\n`);
+        text +=`\n -------------------------------------\n`;
+        text += `\n💰 *Total:* ${document.getElementById('cart-total').innerText}\n`;
+        
+        text += `\n📋 *Customer Details:* \n`;
+        text += `\n👤 *Full Name:* ${fullName || "N/A"}`;
+        text += `\n📞 *Phone:* ${phoneNumber || "N/A"}`;
+        text += `\n📧 *Email:* ${email || "N/A"}`;
+        text += `\n📍 *Address:* ${addr}`;
+        
+        if(userLocation !== "") {
+            text += `\n🗺️ *GPS Location:* ${userLocation}`;
+        }
+
+        // 1. DEDUCT INVENTORY AND SAVE LOCALLY
+        cart.forEach(cartItem => {
+            const productIndex = products.findIndex(p => p.id === cartItem.id);
+            if(productIndex !== -1) {
+                products[productIndex].stock -= cartItem.qty;
+            }
+        });
+        localStorage.setItem('safari_inventory', JSON.stringify(products));
+
+        // 2. CLEAR CART AND REFRESH VISUALS
+        cart = []; 
+        save(); 
+        renderCart();
+        renderHome(); // Updates stock display on home page
+        runFilters(); // Updates stock display on shop page
+        
+        alert("Order prepared! Stock updated locally. Opening WhatsApp...");
+        showPage('home'); 
+
+        // 3. OPEN WHATSAPP
+        window.open(`https://wa.me/96176134251?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    // INIT
+    window.onload = () => { renderHome(); runFilters(); save(); };
+</script>
+
+</body>
+</html>
