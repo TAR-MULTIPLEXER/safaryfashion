@@ -15,7 +15,6 @@
         header { border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; background: white; width: 100%; }
         .main-nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; max-width: 1600px; margin: 0 auto; }
         .logo-img { height: 45px; cursor: pointer; object-fit: contain; }
-        
         .nav-links { display: flex; gap: 35px; list-style: none; align-items: center; }
         .nav-links a { text-decoration: none; color: black; font-size: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; transition: color 0.3s; }
         .nav-links a:hover { color: var(--gold); }
@@ -28,8 +27,8 @@
         .intsec-text { width: 45%; display: flex; flex-direction: column; justify-content: center; padding: 0 8%; background: white; }
         .intsec-text h1 { font-family: 'Playfair Display', serif; font-size: clamp(40px, 5vw, 60px); line-height: 1.1; margin-bottom: 25px; }
         .intsec-img { flex: 1; background: url('image/background_wallpaper.jpg') center/cover no-repeat; }
-        .btn-black { background: black; color: white; padding: 18px 40px; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; display: inline-block; width: fit-content; border: none; cursor: pointer; transition: 0.3s; }
-        .btn-black:hover { background: var(--gold); }
+        .backbtn { background: black; color: white; padding: 18px 40px; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; display: inline-block; width: fit-content; border: none; cursor: pointer; transition: 0.3s; }
+        .backbtn:hover { background: var(--gold); }
         .section-padding { padding: 80px 5%; max-width: 1600px; margin: 0 auto; }
         .section-title { font-family: 'Playfair Display', serif; font-size: 32px; text-align: center; margin-bottom: 50px; }
         .dept-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -93,7 +92,7 @@
             .intsec, .intro-section, .shop-layout, .dept-grid { grid-template-columns: 1fr; flex-direction: column; }
             .intsec-text { width: 100%; padding: 60px 5%; text-align: center; }
             .intsec-img { height: 400px; }
-            .btn-black { margin: 0 auto; }
+            .backbtn { margin: 0 auto; }
             .sidebar { position: static; margin-bottom: 20px; }
             .footer-top { grid-template-columns: 1fr; text-align: center; }
             .footer-brand p { margin: 15px auto; }
@@ -107,12 +106,12 @@
 <header>
     <div class="main-nav">
         <ul class="nav-links">
-            <img src="image/safary fashion logo.jpg" class="logo-img" onclick="showPage('home')" alt="Safari Fashion">
-            <li onclick="showPage('home')"><a>Home</a></li>
-            <li onclick="showPage('shop')"><a>Collections</a></li>
+            <img src="image/safary fashion logo.jpg" class="logo-img" onclick="showpage('home')" alt="Safari Fashion">
+            <li onclick="showpage('home')"><a>Home</a></li>
+            <li onclick="showpage('shop')"><a>Collections</a></li>
         </ul>
         <div class="nav-links">
-            <div class="cart-icon" onclick="showPage('cart')">
+            <div class="cart-icon" onclick="showpage('cart')">
                 <i class="fas fa-shopping-bag"></i>
                 <span id="cart-count">0</span>
             </div>
@@ -125,22 +124,22 @@
             <p style="font-size: 11px; letter-spacing: 3px; margin-bottom: 10px;">SPRING / SUMMER 2026</p>
             <h1>Defining Modern Modesty.</h1>
             <p style="color: #666; margin-bottom: 35px;">From the heart of Abu Dhabi to your wardrobe. High-quality fabrics tailored for every occasion.</p>
-            <button onclick="showPage('shop')" class="btn-black">Start Shopping</button>
+            <button onclick="showpage('shop')" class="backbtn">Start Shopping</button>
         </div>
         <div class="intsec-img"></div>
     </section>
     <section class="section-padding">
         <h2 class="section-title">Shop by Department</h2>
         <div class="dept-grid">
-            <div class="dept-card" onclick="filterByCat('women')">
+            <div class="dept-card" onclick="filterbycat('women')">
                 <img src="image/women-intro.jpg">
                 <div class="dept-overlay"><h3>WOMEN</h3><p>Abayas & Evening Wear</p></div>
             </div>
-            <div class="dept-card" onclick="filterByCat('men')">
+            <div class="dept-card" onclick="filterbycat('men')">
                 <img src="https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?auto=format&fit=crop&w=600">
                 <div class="dept-overlay"><h3>MEN</h3><p>Polo Shirts & Formals</p></div>
             </div>
-            <div class="dept-card" onclick="filterByCat('kids')">
+            <div class="dept-card" onclick="filterbycat('kids')">
                 <img src="https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=600">
                 <div class="dept-overlay"><h3>KIDS</h3><p>Suits & Summer Sets</p></div>
             </div>
@@ -178,11 +177,11 @@
         <aside class="sidebar">
             <div class="filter-item">
                 <h4>Search</h4>
-                <input type="text" id="searchBar" placeholder="Search styles..." onkeyup="runFilters()">
+                <input type="text" id="searchbar" placeholder="Search styles..." onkeyup="runfilter()">
             </div>
             <div class="filter-item">
                 <h4>Category</h4>
-                <select id="catF" onchange="runFilters()">
+                <select id="catF" onchange="runfilter()">
                     <option value="all">All Departments</option>
                     <option value="women">Women</option>
                     <option value="men">Men</option>
@@ -192,7 +191,7 @@
             
             <div class="filter-item">
                 <h4>Season</h4>
-                <select id="seasonF" onchange="runFilters()">
+                <select id="seasonF" onchange="runfilter()">
                     <option value="all">All Seasons</option>
                     <option value="summer">Summer</option>
                     <option value="winter">Winter</option>
@@ -201,7 +200,7 @@
 
             <div class="filter-item">
                 <h4>Price</h4>
-                <select id="priceF" onchange="runFilters()">
+                <select id="priceF" onchange="runfilter()">
                     <option value="all">All Prices</option>
                     <option value="under200">Under 200 AED</option>
                     <option value="200to500">200 AED - 500 AED</option>
@@ -218,12 +217,12 @@
     <div class="cart-container">
         <div class="cart-header">
             <h1 style="font-family:'Playfair Display'; font-size:36px;">Your Bag</h1>
-            <button class="clear-btn" onclick="clearFullBag()">Clear All Cart</button>
+            <button class="clear-btn" onclick="clearbag()">Clear All Cart</button>
         </div>
         <div id="cart-items"></div>
         <div id="cart-empty" style="display:none; text-align:center; padding:80px 0;">
             <p style="margin-bottom: 20px; color:#666;">Your bag is currently empty.</p>
-            <button class="btn-black" onclick="showPage('shop')">Continue Shopping</button>
+            <button class="backbtn" onclick="showpage('shop')">Continue Shopping</button>
         </div>
         <div class="checkout-box" id="checkout-ui">
             <div style="display:flex; justify-content:space-between; font-size:24px; font-weight:700; border-bottom:1px solid #ddd; padding-bottom:20px;">
@@ -247,12 +246,12 @@
             </div>
 
             <div style="margin-top:15px; margin-bottom:20px;">
-                <button onclick="getLocation()" style="background:#eee; border:1px solid #ddd; padding:12px; font-size:12px; cursor:pointer; font-weight:700; width:100%; display:flex; justify-content:center; align-items:center; gap:10px; transition:0.3s;">
+                <button onclick="getloc()" style="background:#eee; border:1px solid #ddd; padding:12px; font-size:12px; cursor:pointer; font-weight:700; width:100%; display:flex; justify-content:center; align-items:center; gap:10px; transition:0.3s;">
                     <i class="fas fa-map-marker-alt"></i> ADD MY GPS LOCATION
                 </button>
                 <p id="location-status" style="font-size:12px; font-weight:600; margin-top:10px; display:none; text-align:center;"></p>
             </div>
-            <button class="wa-btn" onclick="submitToWA()">
+            <button class="wa-btn" onclick="submittowattsapp()">
                 <i class="fab fa-whatsapp" style="font-size:18px;"></i> CHECKOUT VIA WHATSAPP
             </button>
         </div>
@@ -268,9 +267,9 @@
         <div class="footer-links">
             <h4>Shop</h4>
             <ul>
-                <li><a onclick="filterByCat('women')">Women's Collection</a></li>
-                <li><a onclick="filterByCat('men')">Men's Collection</a></li>
-                <li><a onclick="filterByCat('kids')">Kids' Collection</a></li>
+                <li><a onclick="filterbycat('women')">Women's Collection</a></li>
+                <li><a onclick="filterbycat('men')">Men's Collection</a></li>
+                <li><a onclick="filterbycat('kids')">Kids' Collection</a></li>
             </ul>
         </div>
         <div class="footer-links">
@@ -314,24 +313,24 @@
     ];
     let products = JSON.parse(localStorage.getItem('safari_inventory')) || defaultProducts;
     let cart = JSON.parse(localStorage.getItem('safari_luxury_cart')) || [];
-    let userLocation = ""; 
-    function showPage(id) {
+    let userlocation = ""; 
+    function showpage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
         document.getElementById(id).classList.add('active-page');
-        if(id === 'cart') renderCart();
+        if(id === 'cart') rendercart();
         window.scrollTo(0,0);
     }
-    function createCard(p) {
-        const isOutOfStock = p.stock <= 0;
-        const stockLabel = isOutOfStock ? `Out of Stock` : `Shop Now +`;
-        const clickAction = isOutOfStock ? `style="opacity: 0.5; cursor: not-allowed;"` : `onclick="addToCart(${p.id})"`;
-        const imgFilter = isOutOfStock ? `filter: grayscale(100%);` : ``;
-        const labelColor = isOutOfStock ? `color: red;` : ``;
+    function createcard(p) {
+        const ioos = p.stock <= 0; // e5tisar la is out of stock 
+        const stocklable = ioos ? `Out of Stock` : `Shop Now +`;
+        const clickact = ioos ? `style="opacity: 0.5; cursor: not-allowed;"` : `onclick="addtocart(${p.id})"`;
+        const imgfilter = ioos ? `filter: grayscale(100%);` : ``;
+        const lablecolor = ioos ? `color: red;` : ``;
         return `
-            <div class="p-card" ${clickAction}>
+            <div class="p-card" ${clickact}>
                 <div class="p-img-container">
-                    <img src="${p.img}" style="${imgFilter}">
-                    <div class="quick-add" style="${labelColor}">${stockLabel}</div>
+                    <img src="${p.img}" style="${imgfilter}">
+                    <div class="quick-add" style="${lablecolor}">${stocklable}</div>
                 </div>
                 <div class="p-info">
                     <p style="font-size:10px; color:#888; text-transform:uppercase; margin-bottom:3px;">${p.cat} • ${p.stock} Left</p>
@@ -341,33 +340,33 @@
             </div>
         `;
     }
-    function renderHome() {
+    function renderhome() {
         const featured = products.filter(p => p.featured);
-        document.getElementById('featured-grid').innerHTML = featured.map(p => createCard(p)).join('');
+        document.getElementById('featured-grid').innerHTML = featured.map(p => createcard(p)).join('');
     }
-    function runFilters() {
-        const q = document.getElementById('searchBar').value.toLowerCase();
+    function runfilter() {
+        const q = document.getElementById('searchbar').value.toLowerCase();
         const cat = document.getElementById('catF').value;
         const season = document.getElementById('seasonF').value; 
         const price = document.getElementById('priceF').value; 
         const filtered = products.filter(p => {
-            const matchSearch = p.name.toLowerCase().includes(q);
-            const matchCat = (cat === 'all' || p.cat === cat);
-            const matchSeason = (season === 'all' || p.season === season || p.season === 'all'); 
-            let matchPrice = true;
-            if(price === 'under200') matchPrice = p.price < 200;
-            if(price === '200to500') matchPrice = p.price >= 200 && p.price <= 500;
-            if(price === 'over500') matchPrice = p.price > 500;
-            return matchSearch && matchCat && matchSeason && matchPrice;
+            const matchsearch = p.name.toLowerCase().includes(q);
+            const matchcat = (cat === 'all' || p.cat === cat);
+            const matchseason = (season === 'all' || p.season === season || p.season === 'all'); 
+            let matchprice = true;
+            if(price === 'under200') matchprice = p.price < 200;
+            if(price === '200to500') matchprice = p.price >= 200 && p.price <= 500;
+            if(price === 'over500') matchprice = p.price > 500;
+            return matchsearch && matchcat && matchseason && matchprice;
         });
-        document.getElementById('full-shop-grid').innerHTML = filtered.map(p => createCard(p)).join('');
+        document.getElementById('full-shop-grid').innerHTML = filtered.map(p => createcard(p)).join('');
     }
-    function filterByCat(c) {
-        showPage('shop');
+    function filterbycat(c) {
+        showpage('shop');
         document.getElementById('catF').value = c;
-        runFilters();
+        runfilter();
     }
-    function addToCart(id) {
+    function addtocart(id) {
         const p = products.find(i => i.id === id);
         const existing = cart.find(i => i.id === id);
         if(existing) {
@@ -386,16 +385,16 @@
         }
         save();
     }
-    function renderCart() {
+    function rendercart() {
         const container = document.getElementById('cart-items');
         const ui = document.getElementById('checkout-ui');
         const empty = document.getElementById('cart-empty');
-        const clearBtn = document.querySelector('.clear-btn');
+        const clearbtn = document.querySelector('.clear-btn');
 
         if(cart.length === 0) {
-            container.innerHTML = ""; ui.style.display="none"; empty.style.display="block"; clearBtn.style.display="none"; return;
+            container.innerHTML = ""; ui.style.display="none"; empty.style.display="block"; clearbtn.style.display="none"; return;
         }
-        empty.style.display="none"; ui.style.display="block"; clearBtn.style.display="block";
+        empty.style.display="none"; ui.style.display="block"; clearbtn.style.display="block";
         let total = 0;
         container.innerHTML = cart.map(item => {
             total += (item.price * item.qty);
@@ -406,90 +405,90 @@
                         <h3>${item.name}</h3>
                         <p style="font-weight:700; color:#555;">${item.price} AED</p>
                         <div class="qty-controls">
-                            <button class="qty-btn" onclick="updateQty(${item.id}, -1)">-</button>
+                            <button class="qty-btn" onclick="updateqty(${item.id}, -1)">-</button>
                             <span style="font-size:14px; width:20px; text-align:center;">${item.qty}</span>
-                            <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+                            <button class="qty-btn" onclick="updateqty(${item.id}, 1)">+</button>
                         </div>
                         <div style="margin-top:10px; font-size:11px; color:#888;">In Stock: ${products.find(p => p.id === item.id).stock}</div>
                     </div>
                     <div style="text-align:right;">
                         <p style="font-weight:700; font-size:18px; margin-bottom:15px;">${item.price * item.qty} AED</p>
-                        <i class="fas fa-times" style="color:#aaa; cursor:pointer; font-size:18px;" onclick="removeItem(${item.id})"></i>
+                        <i class="fas fa-times" style="color:#aaa; cursor:pointer; font-size:18px;" onclick="removeitem(${item.id})"></i>
                     </div>
                 </div>
             `;
         }).join('');
         document.getElementById('cart-total').innerText = total + " AED";
     }
-    function updateQty(id, d) {
+    function updateqty(id, d) {
         const i = cart.find(c => c.id === id);
         const p = products.find(prod => prod.id === id); 
-        let newQty = i.qty + d;
-        if (newQty > p.stock) {
+        let newqty = i.qty + d;
+        if (newqty > p.stock) {
             alert(`Sorry, you cannot add more. Only ${p.stock} items available in stock.`);
             return;
         }
-        if(newQty < 1) newQty = 1;
-        i.qty = newQty;
-        save(); renderCart();
+        if(newqty < 1) newqty = 1;
+        i.qty = newqty;
+        save(); rendercart();
     }
-    function removeItem(id) {
+    function removeitem(id) {
         cart = cart.filter(c => c.id !== id);
-        save(); renderCart();
+        save(); rendercart();
     }
-    function clearFullBag() {
+    function clearbag() {
         if(confirm("Are you sure you want to empty your bag?")) {
             cart = [];
             save();
-            renderCart();
+            rendercart();
         }
     }
     function save() {
         localStorage.setItem('safari_luxury_cart', JSON.stringify(cart));
         document.getElementById('cart-count').innerText = cart.reduce((a, b) => a + b.qty, 0);
     }
-    function getLocation() {
-        const statusText = document.getElementById('location-status');
+    function getloc() {
+        const stattext = document.getElementById('location-status');
         if (navigator.geolocation) {
-            statusText.style.display = "block";
-            statusText.style.color = "#888";
-            statusText.innerText = "Fetching location... please allow prompt.";
+            stattext.style.display = "block";
+            stattext.style.color = "#888";
+            stattext.innerText = "Fetching location... please allow prompt.";
             
             navigator.geolocation.getCurrentPosition(function(position) {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
-                userLocation = `https://www.google.com/maps?q=${lat},${lon}`;
+                userlocation = `https://www.google.com/maps?q=${lat},${lon}`;
                 
-                statusText.style.color = "green";
-                statusText.innerText = "✓ Location captured successfully!";
+                stattext.style.color = "green";
+                stattext.innerText = "✓ Location captured successfully!";
             }, function(error) {
-                statusText.style.color = "red";
-                statusText.innerText = "❌ Please allow location access in your browser.";
+                stattext.style.color = "red";
+                stattext.innerText = "❌ Please allow location access in your browser.";
             });
         } else {
             alert("Geolocation is not supported by this browser.");
         }
     }
-    function submitToWA() {
+    function submittowattsapp() {
         const addr = document.getElementById('address').value;
-        const fullName = document.getElementById('client-name').value;
-        const phoneNumber = document.getElementById('client-phonenumber').value;
+        const fullname = document.getElementById('client-name').value;
+        const phonenum = document.getElementById('client-phonenumber').value;
         const email = document.getElementById('client-email').value;
         if(cart.length === 0) return alert("Your bag is empty. Please add items before checking out.");
-        if(!fullName) return alert("Please enter your full name.");
-        if(!phoneNumber) return alert("Please enter your phone number.");
+        if(!fullname) return alert("Please enter your full name.");
+        if(!phonenum) return alert("Please enter your phone number.");
         if(!addr) return alert("Please enter delivery address & landmark.");
         let text = "🛍️ *ORDER FROM SAFARI FASHION WEB*\n\n";
         cart.forEach(i => text += `▪️ ${i.name} (x${i.qty}) - ${i.price * i.qty} AED\n`);
         text +=`\n -------------------------------------\n`;
         text += `\n💰 *Total:* ${document.getElementById('cart-total').innerText}\n`;
         text += `\n📋 *Customer Details:* \n`;
-        text += `\n👤 *Full Name:* ${fullName || "N/A"}`;
-        text += `\n📞 *Phone:* ${phoneNumber || "N/A"}`;
+        text += `\n👤 *Full Name:* ${fullname || "N/A"}`;
+        text += `\n📞 *Phone:* ${phonenum || "N/A"}`;
         text += `\n📧 *Email:* ${email || "N/A"}`;
         text += `\n📍 *Address:* ${addr}`;
-        if(userLocation !== "") {
-            text += `\n🗺️ *GPS Location:* ${userLocation}`;
+        if(userlocation !== "") {
+            text += `\n🗺️ *GPS Location:* ${userlocation}`;
         }
         cart.forEach(cartItem => {
             const productIndex = products.findIndex(p => p.id === cartItem.id);
@@ -500,14 +499,14 @@
         localStorage.setItem('safari_inventory', JSON.stringify(products));
         cart = []; 
         save(); 
-        renderCart();
-        renderHome();
-        runFilters();
+        rendercart();
+        renderhome();
+        runfilter();
         alert("Order prepared! Stock updated locally. Opening WhatsApp...");
-        showPage('home'); 
+        showpage('home'); 
         window.open(`https://wa.me/96176134251?text=${encodeURIComponent(text)}`, '_blank');
     }
-    window.onload = () => { renderHome(); runFilters(); save(); };
+    window.onload = () => { renderhome(); runfilter(); save(); };
 </script>
 
 </body>
